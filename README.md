@@ -2,22 +2,22 @@
 
 ## Linux Setup
 
-- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/Linux-setup)
+- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/tree/main/Linux-setup)
 
 #
 
 ## Nvidia Driver Management
 
-- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/Nvidia-driver-management)
+- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/tree/main/Nvidia-driver-management)
 
 #
 
 ## Conda Env Setup
 
-- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/CondaEnv-setup)
+- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/tree/main/CondaEnv-setup)
 
 #
 
 ## JupyterLab Setup
 
-- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/jupyterlab-setup)
+- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/tree/main/jupyterlab-setup)
