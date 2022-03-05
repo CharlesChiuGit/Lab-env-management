@@ -96,7 +96,22 @@
      unset cuda_version
      ```
 
-6. (Optional) If gpus keep burning out when usage is too high, try the following command to limite gpu power.
+6. Set the CUDA's path to system PATH.
+   - Open **/home/{user}/.bashrc** with your text editer.
+     ```bash
+     vim ~/.bashrc
+     ```
+   - Put these line at the bottom of the bashrc.
+     ```bash
+     # Your cuda-version should look like this 'cuda-11.5'
+     export PATH=/usr/local/{cuda-version}/bin${PATH:+:${PATH}}
+     export LD_LIBRARY_PATH=/usr/local/{cuda-version}/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+     ```
+   - Reload the system path.
+     ```bash
+     source ~/.bashrc
+     ```
+7. (Optional) If gpus keep burning out when usage is too high, try the following command to limite gpu power.
 
    - **Important!!** Following command will be restored to default after restart.
 
