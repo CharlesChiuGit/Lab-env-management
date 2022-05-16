@@ -9,6 +9,7 @@
    ```
 
 1. Completely remove cuda & nvidia driver
+
    ```bash
    sudo apt --purge remove "*cublas*" "cuda*" "nsight*" -y
    sudo apt remove --purge '^nvidia-.*' -y
@@ -16,11 +17,14 @@
    sudo rm -rf /usr/local/cuda*
    sudo apt --purge autoremove -y
    ```
+
 2. Check if there is anything related packages leaft, then manually remove them via "sudo apt --purge remove sth".
+
    ```bash
    dpkg -l | grep -i nvidia
    dpkg -l | grep nvidia-driver
    ```
+
 3. Install nvidia driver
 
    ```bash
@@ -40,7 +44,9 @@
      - [Are PPAs safe to add to my system and what are some "red flags" to watch out for?](https://askubuntu.com/questions/35629/are-ppas-safe-to-add-to-my-system-and-what-are-some-red-flags-to-watch-out-for)
 
 4. Restart and check nvidia driver with **nvidia-smi**. (prefer)
+
    - If u want to reload gpu mods while keeping server alive, use following commands. **However this may sriously slow down the gpu process, restart will fix it.**
+
      ```bash
      # Change to CLI only mode
      sudo systemctl isolate multi-user.target
@@ -55,13 +61,16 @@
      # Set to default target
      sudo systemctl default
      ```
+
    - If nvidia-modprobe is broken or missing, use following commands.
+
      ```bash
      # Install nvidia-modprobe
      sudo apt install nvidia-modprobe
      # Check nvidia-modprobe version
      nvidia-modprobe -v
      ```
+
 5. Install [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads) & [cuDNN](https://developer.nvidia.com/rdp/cudnn-archive) via network.
 
    - CUDA: It is always prefer to walk through all the [Installation Guide](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) first.
@@ -97,20 +106,27 @@
      ```
 
 6. Set the CUDA's path to system PATH.
+
    - Open **/home/{user}/.bashrc** with your text editer.
+
      ```bash
      vim ~/.bashrc
      ```
+
    - Put these line at the bottom of the bashrc.
+
      ```bash
      # Your cuda-version should look like this 'cuda-11.5'
      export PATH=/usr/local/{cuda-version}/bin${PATH:+:${PATH}}
      export LD_LIBRARY_PATH=/usr/local/{cuda-version}/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
      ```
+
    - Reload the system path.
+
      ```bash
      source ~/.bashrc
      ```
+
 7. (Optional) If gpus keep burning out when usage is too high, try the following command to limite gpu power.
 
    - **Important!!** Following command will be restored to default after restart.
