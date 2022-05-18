@@ -15,7 +15,7 @@ sudo apt update
 sudo apt install nala
 sudo nala install ssh vim tmux htop git make python3-setuptools python3-pip curl -y
 sudo nala install neofetch hollywood cmatrix jp2a -y
-sudo apt install highlight -y
+sudo nala install highlight bat -y
 
 #snap install
 sudo snap install cpufetch gdu-disk-usage-analyzer ascii-image-converter lolcat
@@ -164,6 +164,12 @@ sudo dpkg -i lsd_0.21.0_amd64.deb
 ```
 
 get .deb file from [release page](https://github.com/Peltoche/lsd/releases)
+
+## [batcat](https://github.com/sharkdp/bat)
+
+```bash
+batcat ~/.bashrc
+```
 
 ---
 
