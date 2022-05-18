@@ -16,6 +16,7 @@ sudo apt install nala
 sudo nala install ssh vim tmux htop git make python3-setuptools python3-pip curl -y
 sudo nala install neofetch hollywood cmatrix jp2a -y
 sudo nala install highlight bat -y
+sudo nala install zoxide -y
 
 #snap install
 sudo snap install cpufetch gdu-disk-usage-analyzer ascii-image-converter lolcat
@@ -169,6 +170,27 @@ get .deb file from [release page](https://github.com/Peltoche/lsd/releases)
 
 ```bash
 batcat ~/.bashrc
+```
+
+## [zoxide](https://github.com/ajeetdsouza/zoxide)
+
+For Ubuntu 21.04+:
+
+```bash
+sudo apt install zoxide
+```
+
+For Ubuntu 21.04-:
+
+```bash
+curl -sS https://webinstall.dev/zoxide | bash
+```
+
+Add to bashrc
+
+```bash
+# zoxide
+eval "$(zoxide init bash)"
 ```
 
 ---
