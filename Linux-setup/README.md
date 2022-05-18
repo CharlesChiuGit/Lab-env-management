@@ -15,6 +15,7 @@ sudo apt update
 sudo apt install nala
 sudo nala install ssh vim tmux htop git make python3-setuptools python3-pip curl -y
 sudo nala install neofetch hollywood cmatrix jp2a -y
+sudo apt install highlight -y
 
 #snap install
 sudo snap install cpufetch gdu-disk-usage-analyzer ascii-image-converter lolcat
@@ -43,6 +44,39 @@ ranger is a console file manager with VI key bindings. It provides a minimalisti
 ```bash
 git clone https://github.com/ranger/ranger.git
 cd ranger && sudo make install
+```
+
+### Syntax highlight in ranger preview
+
+```bash
+sudo apt install highlight
+```
+
+Plugin: Install [ranger_devicons](https://github.com/alexanderjeurissen/ranger_devicons)
+
+### Add icon to ranger
+
+```bash
+git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
+```
+
+Set in `rc.conf`.
+
+```bash
+echo "default_linemode devicons" >> $HOME/.config/ranger/rc.conf
+```
+
+### Set image preview
+
+```bash
+pip install ueberzug
+```
+
+Set in `rc.conf`.
+
+```bash
+set preview_images true
+set preview_images_method ueberzug
 ```
 
 ## [nvtop](https://github.com/Syllo/nvtop)
