@@ -22,7 +22,7 @@ sudo nala install zoxide -y
 sudo snap install cpufetch gdu-disk-usage-analyzer ascii-image-converter lolcat
 
 # pip install
-pip install speedtest-cli gdown
+pip3 install speedtest-cli gdown thefuck
 
 # cool stuff
 sudo nala install hollywood cmatrix -y
@@ -190,6 +190,16 @@ Add to bashrc
 ```bash
 # zoxide
 eval "$(zoxide init bash)"
+```
+
+## [thefuck](https://github.com/nvbn/thefuck)
+
+Fix cli command typo with `fuck`.
+
+```bash
+sudo apt update
+sudo apt install python3-dev python3-pip python3-setuptools
+sudo pip3 install thefuck --user
 ```
 
 ---
