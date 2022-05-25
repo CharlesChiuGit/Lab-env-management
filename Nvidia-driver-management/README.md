@@ -93,9 +93,9 @@
 
      ```bash
      # Set the "cudnn_version" alias based on the version, u can find the latest version in Installation Guide
-     export cudnn_version='8.3.2.*'
+     export cudnn_version='8.4.0.*'
      # Set the "cuda_version" alias based on corresponding CUDA version u installed previously
-     export cuda_version='cuda10.2' or 'cuda11.5'
+     export cuda_version='cuda10.2' or 'cuda11.6'
      sudo apt install zlib1g
      sudo apt-get install libcudnn8=${cudnn_version}-1+${cuda_version}
      sudo apt-get install libcudnn8-dev=${cudnn_version}-1+${cuda_version}
