@@ -13,10 +13,9 @@ sudo apt autoremove --purge -y
 ```bash
 sudo apt update
 sudo apt install nala
-sudo nala install ssh vim tmux htop git make python3-setuptools python3-pip curl -y
-sudo nala install neofetch hollywood cmatrix jp2a -y
-sudo nala install highlight bat -y
-sudo nala install zoxide -y
+sudo apt install ssh vim tmux htop git make python3-setuptools python3-pip curl -y
+sudo apt install highlight bat -y
+sudo apt install zoxide -y
 
 #snap install
 sudo snap install cpufetch gdu-disk-usage-analyzer ascii-image-converter lolcat
@@ -25,7 +24,7 @@ sudo snap install cpufetch gdu-disk-usage-analyzer ascii-image-converter lolcat
 pip3 install speedtest-cli gdown thefuck
 
 # cool stuff
-sudo nala install hollywood cmatrix -y
+sudo apt install neofetch hollywood cmatrix jp2a -y
 ```
 
 ---
@@ -199,7 +198,7 @@ Fix cli command typo with `fuck`.
 ```bash
 sudo apt update
 sudo apt install python3-dev python3-pip python3-setuptools
-sudo pip3 install thefuck --user
+sudo apt install thefuck
 ```
 
 ---
