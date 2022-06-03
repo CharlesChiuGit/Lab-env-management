@@ -14,7 +14,8 @@ sudo apt autoremove --purge -y
 sudo apt update
 sudo apt install nala # ubuntu22.04+
 sudo apt install ssh vim tmux htop git make python3-setuptools python3-pip curl -y
-sudo apt install ranger highlight bat zoxide -y
+sudo apt install ranger highlight bat -y
+sudo apt install zoxide fzf -y
 
 #snap install
 sudo snap install cpufetch gdu-disk-usage-analyzer ascii-image-converter lolcat
