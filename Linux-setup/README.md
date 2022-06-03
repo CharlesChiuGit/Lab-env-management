@@ -20,10 +20,10 @@ sudo apt install ranger highlight bat zoxide -y
 sudo snap install cpufetch gdu-disk-usage-analyzer ascii-image-converter lolcat
 
 # pip install
-pip3 install speedtest-cli gdown thefuck
+pip3 install gdown
 
 # cool stuff
-sudo apt install neofetch hollywood cmatrix jp2a -y
+sudo apt install neofetch hollywood cmatrix jp2a speedtest-cli thefuck -y
 ```
 
 ---
