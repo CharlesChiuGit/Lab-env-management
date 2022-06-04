@@ -2,7 +2,7 @@
 
 ## Prerequisite
 
-<details> 
+<details>
   <summary>For Win10_2004 or earlier</summary>
 Enable the WSL feature with admin pwsh:
 
