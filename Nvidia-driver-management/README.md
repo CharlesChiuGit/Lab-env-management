@@ -93,9 +93,9 @@
 
      ```bash
      # Set the "cudnn_version" alias based on the version, u can find the latest version in Installation Guide
-     export cudnn_version='8.3.2.*'
+     export cudnn_version='8.4.0.*'
      # Set the "cuda_version" alias based on corresponding CUDA version u installed previously
-     export cuda_version='cuda10.2' or 'cuda11.5'
+     export cuda_version='cuda10.2' or 'cuda11.6'
      sudo apt install zlib1g
      sudo apt-get install libcudnn8=${cudnn_version}-1+${cuda_version}
      sudo apt-get install libcudnn8-dev=${cudnn_version}-1+${cuda_version}
@@ -117,8 +117,28 @@
 
      ```bash
      # Your cuda-version should look like this 'cuda-11.5'
-     export PATH=/usr/local/{cuda-version}/bin${PATH:+:${PATH}}
-     export LD_LIBRARY_PATH=/usr/local/{cuda-version}/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+     ### Check nvidia gpu
+     # Some distro requires that the absolute path is given when invoking lspci
+     # e.g. /sbin/lspci if the user is not root.
+     gpu=$(lspci | grep -i '.* vga .* nvidia .*')
+
+     # nocasematch: If set, Bash matches patterns in a case-insensitive fashion
+     # when performing matching while executing case or [[ conditional commands,
+     # when performing pattern substitution word expansions, or when filtering
+     # possible completions as part of programmable completion.
+     shopt -s nocasematch
+
+     ### CUDA PATH
+     CUDA_PATH=/usr/local/cuda
+     if [ -d "${CUDA_PATH}" ] && [[ $gpu == *' nvidia '* ]]; then
+         # echo "You have nvgpu and cuda installed!"
+         export PATH="${CUDA_PATH}/bin"${PATH:+:${PATH}}
+         export LD_LIBRARY_PATH="${CUDA_PATH}/lib64"${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+       elif [ ! -d "${CUDA_PATH}" ] && [[ $gpu == *' nvidia '* ]]; then
+         echo "You have nvgpu, but you don't have cuda installed!"
+       elif ! [[ $gpu == *' nvidia '* ]]; then
+         echo "You don't have nvgpu loaded!"
+     fi
      ```
 
    - Reload the system path.

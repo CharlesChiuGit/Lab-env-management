@@ -12,20 +12,19 @@ sudo apt autoremove --purge -y
 
 ```bash
 sudo apt update
-sudo apt install nala
-sudo nala install ssh vim tmux htop git make python3-setuptools python3-pip curl -y
-sudo nala install neofetch hollywood cmatrix jp2a -y
-sudo nala install highlight bat -y
-sudo nala install zoxide -y
+sudo apt install nala # ubuntu22.04+
+sudo apt install ssh vim tmux htop git make python3-setuptools python3-pip curl -y
+sudo apt install ranger highlight bat -y
+sudo apt install zoxide fzf -y
 
 #snap install
 sudo snap install cpufetch gdu-disk-usage-analyzer ascii-image-converter lolcat
 
 # pip install
-pip3 install speedtest-cli gdown thefuck
+pip3 install gdown
 
 # cool stuff
-sudo nala install hollywood cmatrix -y
+sudo apt install neofetch hollywood cmatrix jp2a speedtest-cli thefuck -y
 ```
 
 ---
@@ -44,6 +43,7 @@ ranger is a console file manager with VI key bindings. It provides a minimalisti
 
 ```bash
 sudo pip3 install ranger-fm
+sudo apt install ranger
 ```
 
 ### Syntax highlight in ranger preview
@@ -199,7 +199,7 @@ Fix cli command typo with `fuck`.
 ```bash
 sudo apt update
 sudo apt install python3-dev python3-pip python3-setuptools
-sudo pip3 install thefuck --user
+sudo apt install thefuck
 ```
 
 ---
