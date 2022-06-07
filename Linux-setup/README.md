@@ -23,6 +23,9 @@ sudo snap install cpufetch gdu-disk-usage-analyzer ascii-image-converter lolcat
 # pip install
 pip3 install gdown
 
+# pixilated image in terminal
+sudo apt install termimage
+
 # cool stuff
 sudo apt install neofetch hollywood cmatrix jp2a speedtest-cli thefuck -y
 ```
@@ -200,6 +203,43 @@ Fix cli command typo with `fuck`.
 sudo apt update
 sudo apt install python3-dev python3-pip python3-setuptools
 sudo apt install thefuck
+```
+
+## [termimage](https://github.com/nabijaczleweli/termimage)
+
+#### From Debian repository
+
+The following line in `/etc/apt/sources.list`:
+
+```apt
+deb https://debian.nabijaczleweli.xyz stable main
+```
+
+With [my PGP key](https://debian.nabijaczleweli.xyz/nabijaczleweli.gpg.key) (the two URLs are interchangeable):
+
+```sh
+wget -O- https://debian.nabijaczleweli.xyz/nabijaczleweli.gpg.key | sudo apt-key add
+# or
+sudo wget -O/etc/apt/trusted.gpg.d/nabijaczleweli.asc https://nabijaczleweli.xyz/pgp.txt
+```
+
+Then the usual
+
+```sh
+sudo apt update
+sudo apt install termimage
+```
+
+will work on x86_64, i686, and x32.
+
+See the [repository README](https://debian.nabijaczleweli.xyz/README) for more information.
+
+## [FiraCode (nerdfonts)](https://www.nerdfonts.com/font-downloads)
+
+```sh
+mkdir ~/.local/share/fonts && cd ~/.local/share/fonts
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
+unzip FiraCode.zip
 ```
 
 ---

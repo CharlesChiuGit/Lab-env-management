@@ -294,7 +294,7 @@ git config --global color.branch auto
 
 ### Editor
 
-In `.profile`
+In `.bashrc` or `.profile`
 
 ```bash
 # set vim as default editor
@@ -304,7 +304,7 @@ export EDITOR=vim
 
 ### ssh-key
 
-```
+```sh
 ssh-keygen -C "your_email@example.com"
 touch ~/.ssh/authorized_keys
 chmod 700 ~/.ssh
@@ -317,6 +317,18 @@ chmod 600 ~/.ssh/authorized_keys
 echo "<USER> ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/<USER>
 ```
 
+### `localhost` alias
+
+In `.bashrc` or `.profile`
+
+```sh
+export mylocalhost=$(cat /etc/resolv.conf | grep nameserver | cut -d ' ' -f 2)
+```
+
+### View images in terminal (kitty+ranger)
+
+[kitty-on-windows-with-wsl2](https://github.com/danielbisar/settings/blob/main/guides/kitty-on-windows-with-wsl2.md)
+
 ### Enter `$HOME` dir
 
 If you want to be at the `$HOME` dir when entering WSL.
@@ -326,6 +338,18 @@ if [ "${PWD:-}" = "/mnt/c/Users/$USER" ]; then
   cd ~
 fi
 ```
+
+---
+
+### Bugs
+
+- `Warning: Missing charsets in String to FontSet conversion`, [ref](https://superuser.com/a/1596296)
+
+  Set this in `.bashrc`:
+
+  ```sh
+  export LANG=C
+  ```
 
 ---
 
