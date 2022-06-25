@@ -333,10 +333,19 @@ export mylocalhost=$(cat /etc/resolv.conf | grep nameserver | cut -d ' ' -f 2)
 
 If you want to be at the `$HOME` dir when entering WSL.
 
-```bash
+```sh
 if [ "${PWD:-}" = "/mnt/c/Users/$USER" ]; then
   cd ~
 fi
+```
+
+### Safer `rm`
+
+```sh
+sudo apt install trash-cli
+# add alias to .bashrc
+alias rm='trash'
+# use trash-list & restore-trash to restore file
 ```
 
 ---

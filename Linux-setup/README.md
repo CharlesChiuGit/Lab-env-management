@@ -17,16 +17,16 @@ sudo apt install ssh vim tmux htop git make python3-setuptools python3-pip curl 
 sudo apt install ranger highlight bat -y
 sudo apt install zoxide fzf -y
 
-#snap install
+### snap install
 sudo snap install cpufetch gdu-disk-usage-analyzer ascii-image-converter lolcat
 
-# pip install
-pip3 install gdown
+### pip install
+pip3 install gdown ntfy[emoji]
 
-# pixilated image in terminal
+### pixilated image in terminal
 sudo apt install termimage
 
-# cool stuff
+### cool stuff
 sudo apt install neofetch hollywood cmatrix jp2a speedtest-cli thefuck -y
 ```
 
@@ -240,6 +240,34 @@ See the [repository README](https://debian.nabijaczleweli.xyz/README) for more i
 mkdir ~/.local/share/fonts && cd ~/.local/share/fonts
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
 unzip FiraCode.zip
+```
+
+## [ntfy](https://github.com/dschep/ntfy)
+
+ntfy brings desktop notification from your shell.
+
+[Linux Desktop Notifications](https://github.com/dschep/ntfy#linux-desktop-notifications---linux)
+
+```sh
+$ sudo apt install python-dbus # on ubuntu/debian
+```
+
+Quick start
+
+```sh
+$ sudo pip install ntfy
+$ ntfy send test
+# send a notification when the command `sleep 10` finishes
+# this sends the message '"sleep 10" succeeded in 0:10 minutes'
+$ ntfy done sleep 10
+$ ntfy -b pushover -o user_key t0k3n send 'Pushover test!'
+$ ntfy -t 'ntfy' send "Here's a custom notification title!"
+$ echo -e 'backends: ["pushover"]\npushover: {"user_key": "t0k3n"}' > ~/.ntfy.yml
+$ ntfy send "Pushover via config file!"
+$ ntfy done --pid 6379  # pid extra
+$ ntfy send ":tada: ntfy supports emoji! :100:"  # emoji extra
+# Enable shell integration
+$ echo 'eval "$(ntfy shell-integration)"' >> ~/.bashrc
 ```
 
 ---
