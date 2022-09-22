@@ -8,6 +8,32 @@ sudo apt upgrade -y
 sudo apt autoremove --purge -y
 ```
 
+## Linux utility
+
+### Configure Password-Based SSH Authentication
+
+- Edit the **/etc/ssh/sshd_config** and modify or add the following line:
+  ```bash
+  PasswordAuthentication yes
+  ```
+
+- Restart the SSH server for the new configuration to take effect:
+  ```bash
+  sudo /etc/init.d/ssh force-reload
+  ```
+
+### Execute sudo without Password
+
+- Open terminal and type:
+  ```bash
+  sudo visudo
+  ```
+
+- At the bottom of the file, add the following line:
+  ```bash
+  <username> ALL=(ALL) NOPASSWD: ALL
+  ```
+
 ## The must-have package in linux
 
 ```bash
