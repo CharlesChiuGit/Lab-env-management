@@ -1,0 +1,6 @@
+sshd
+sshd
+nvtop
+speedtest
+awk
+htop

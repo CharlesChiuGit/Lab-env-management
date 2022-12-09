@@ -1,40 +1,30 @@
 # JupyterLab Setup
 
-## Install jupyterlab in (base) env
+## Install JupyterLab in (base) env
 
-1. Install latest node.js(sudoer mode)
-
-   ```bash
-   curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-   sudo apt-get install -y nodejs
-   ```
-
-2. Install jupyterlab & related packages in **conda env:base**(user mode)
+1. Install JupyterLab & related packages in **Conda env:base**(user mode)
 
    ```bash
-   pip install jupyterlab==3.0.14
-   pip install nbresuse==0.3.4 jupyterlab-system-monitor jupyterlab-git JLDracula pandas
-   conda install -c plotly plotly -y
-   conda install -c conda-forge ipympl=0.7.0 -y
-   conda install -c conda-forge matplotlib -y
-   conda install -c conda-forge ipywidgets jupyterlab_widgets -y
+   conda install -c anaconda git -y
+   conda install -c conda-forge nodejs jupyterlab nbresuse pandas -y
+   conda install -c conda-forge jupyterlab-system-monitor jupyterlab-git plotly -y
+   conda install -c conda-forge ipympl matplotlib ipywidgets jupyterlab_widgets -y
    ```
 
-3. Install jupyterlab extensions
+2. Install JupyterLab extensions
 
    ```bash
-   jupyter labextension install jupyterlab-plotly@4.14.3
-   jupyter nbextension enable --py widgetsnbextension
+   jupyter labextension install jupyterlab-plotly
    ```
 
-4. Build the extensions & check it
+3. Build the extensions & check if all extensions are listed
 
    ```bash
    jupyter lab build
    jupyter labextension list
    ```
 
-## Add other conda env's kernel to jupyterlab
+## Add other Conda env's kernel to JupyterLab
 
 1. Activate the env
 
@@ -48,7 +38,7 @@
    conda install ipykernel
    ```
 
-3. Add kernel to jupyterlab
+3. Add kernel to JupyterLab
 
    ```bash
    python -m ipykernel install --user --name my_env --display-name "whatever"

@@ -1,6 +1,6 @@
 # Linux setup (Ubuntu)
 
-## Keep things up to date
+## Keep system packages up to date
 
 ```bash
 sudo apt update
@@ -12,12 +12,14 @@ sudo apt autoremove --purge -y
 
 ### Configure Password-Based SSH Authentication
 
-- Edit the **/etc/ssh/sshd_config** and modify or add the following line:
+- Edit the **/etc/ssh/sshd_config** and add the following line:
+
   ```bash
   PasswordAuthentication yes
   ```
 
 - Restart the SSH server for the new configuration to take effect:
+
   ```bash
   sudo /etc/init.d/ssh force-reload
   ```
@@ -25,19 +27,21 @@ sudo apt autoremove --purge -y
 ### Execute sudo without Password
 
 - Open terminal and type:
+
   ```bash
   sudo visudo
   ```
 
 - At the bottom of the file, add the following line:
+
   ```bash
   <username> ALL=(ALL) NOPASSWD: ALL
   ```
 
-## Interesting packages in linux
+## Interesting packages in Linux
 
 ```bash
-### cool stuff
+### cool apps
 sudo apt install neofetch hollywood cmatrix jp2a speedtest-cli thefuck -y
 ```
 
@@ -45,7 +49,7 @@ sudo apt install neofetch hollywood cmatrix jp2a speedtest-cli thefuck -y
 
 ## [nvtop](https://github.com/Syllo/nvtop)
 
-Nvtop stands for NVidia TOP, a (h)top like task monitor for NVIDIA GPUs. It can handle multiple GPUs and print information about them in a htop familiar way.
+nvtop stands for Nvidia TOP, a (h)top like task manager for NVIDIA GPUs. It can handle multi-GPUs and print information about them in a htop familiar way.
 
 ```bash
 git clone https://github.com/Syllo/nvtop.git
@@ -66,7 +70,7 @@ See usage in [this doc](https://pypi.org/project/gdown/).
 
 ## [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter#debian-or-ubuntu-based-distros)
 
-ascii-image-converter is a command-line tool that converts images into ascii art and prints them out onto the console.
+ascii-image-converter is a command-line tool that converts images into ASCII art and prints them out onto the console.
 
 ```bash
 ascii-image-converter XXX.png --color
@@ -88,13 +92,7 @@ speedtest
 
 Add rainbow to your command line.
 
-## [FiraCode (nerdfonts)](https://www.nerdfonts.com/font-downloads)
-
-```sh
-mkdir ~/.local/share/fonts && cd ~/.local/share/fonts
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
-unzip FiraCode.zip
-```
+````
 
 ## [ntfy](https://github.com/dschep/ntfy)
 
@@ -104,7 +102,7 @@ ntfy brings desktop notification from your shell.
 
 ```sh
 $ sudo apt install python-dbus # on ubuntu/debian
-```
+````
 
 Quick start
 
@@ -148,7 +146,7 @@ $ echo 'eval "$(ntfy shell-integration)"' >> ~/.bashrc
   sudo apt-get remove --purge texlive-full
   ```
 
-- Remove un-used dependencies
+- Remove unused dependencies
 
   ```bash
   sudo apt autoremove
@@ -166,13 +164,13 @@ $ echo 'eval "$(ntfy shell-integration)"' >> ~/.bashrc
   sudo apt autoclean
   ```
 
-- If some package was autoremoved/removed, yet haven't purged, use **dpkg** to list it.
+- If some packages got autoremoved/removed, yet haven't purged, use **dpkg** to list it.
 
   ```bash
   dpkg -l | grep ^rc
   ```
 
-  - **^rc** means only remove but no purge.
+  - **^rc** means remove but no purge.
 
 - Combine with **grep+awk**.
 

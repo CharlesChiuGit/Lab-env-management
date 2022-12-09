@@ -1,0 +1,10 @@
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qgdown\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qascii-image-converter\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qascii-image-converter is a command-line tool that converts images into ascii art and prints them out onto the console.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qjp2a\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qjp2a is a simple JPEG to ASCII converter.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qspeedtest-cli\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QIf some packages was autoremoved/removed, yet haven't purged, use dpkg to list it.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q^rc means only remove but no purge.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q^rc means remove but no purge.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qascii-image-converter is a command-line tool that converts images into ASCII art and prints them out onto the console.\\E$"}
