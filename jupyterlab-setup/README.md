@@ -24,6 +24,13 @@
    jupyter labextension list
    ```
 
+4. JupyterLab theme
+
+   ```bash
+   jupyter labextension install jupyterlab-tailwind-theme
+   jupyter labextension install @konodyuk/theme-ayu-mirage
+   ```
+
 ## Add other Conda env's kernel to JupyterLab
 
 1. Activate the env
