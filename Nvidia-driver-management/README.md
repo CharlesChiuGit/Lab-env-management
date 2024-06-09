@@ -28,14 +28,14 @@
 3. Install nvidia driver
 
    ```bash
-   # Add PPA's graphics drivers repository to your Ubuntu-based Distos
-   sudo add-apt-repository ppa:graphics-drivers/ppa
+   # Add PPA's graphics drivers repository to your Ubuntu-based Distos, no need for 24.04 and above
+   # sudo add-apt-repository ppa:graphics-drivers/ppa
    # Update all package
    sudo apt update
    # (Optional) Some packages u might need
    sudo apt install g++ freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev libglu1-mesa libglu1-mesa-dev -y
-   # Install ubuntu-drivers-common package
-   sudo apt install ubuntu-drivers-common
+   # Install ubuntu-drivers-common package, no need for 24.04 and above
+   # sudo apt install ubuntu-drivers-common
    # Install the nvidia driver u need. Press "tab" to see all available options, then finish the command
    sudo apt install nvidia-driver-
    ```
