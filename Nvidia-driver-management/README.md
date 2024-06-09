@@ -28,8 +28,8 @@
 3. Install nvidia driver
 
    ```bash
-   # Add PPA's graphics drivers repository to your Ubuntu-based Distos, no need for 24.04 and above
-   # sudo add-apt-repository ppa:graphics-drivers/ppa
+   # Add PPA's graphics drivers repository to your Ubuntu-based Distos
+   sudo add-apt-repository ppa:graphics-drivers/ppa
    # Update all package
    sudo apt update
    # (Optional) Some packages u might need
