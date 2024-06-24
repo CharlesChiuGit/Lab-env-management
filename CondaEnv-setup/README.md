@@ -140,3 +140,8 @@ pip install pytorch-lightning importlib
 pip install hydra-core wandb --upgrade
 python -m pip install ninja
 ```
+
+---
+
+## Useful commands
+https://github.com/matbinder/secure-multi-user-conda
