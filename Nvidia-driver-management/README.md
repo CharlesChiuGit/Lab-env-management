@@ -11,7 +11,7 @@
 1. Completely remove cuda & nvidia driver
 
    ```bash
-   sudo apt --purge remove "*cublas*" "cuda*" "nsight*" -y
+   sudo apt --purge remove "*cublas*" "cuda*" "nsight*" "*cudnn*" "libnvidia*" -y
    sudo apt remove --purge '^nvidia-.*' -y
    # (Optional, Prefer) Remove all CUDA to avoid possible confilication with new driver
    sudo rm -rf /usr/local/cuda*
