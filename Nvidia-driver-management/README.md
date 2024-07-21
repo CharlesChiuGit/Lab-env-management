@@ -28,7 +28,7 @@
   ```
   
 > [!TIP]
-> Besides `/usr/local/cuda*`, make sure to check `$CUDA_HOME`, `$PATH` and `$LD_LIBRARY_PATH` for non-default CUDA installations.
+> Besides `/usr/local/cuda*`, make sure to check `$CUDA_HOME`, `$PATH` and `$LD_LIBRARY_PATH` for non-default CUDA installation path.
 
 ## Install CUDA Toolkit, nvidia driver and cuDNN
 > [!IMPORTANT]  
