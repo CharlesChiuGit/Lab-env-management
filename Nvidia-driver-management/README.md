@@ -4,28 +4,28 @@
 
 - Check if there's any hardware failure by listing all gpus, i.e. gpu lost
 
-  - ```sh
-    lspci | grep -i nvidia
-    ```
+  ```sh
+  lspci | grep -i nvidia
+  ```
 
 - Completely remove CUDA & nvidia driver:
 
-  - ```sh
-    sudo apt --purge remove "*cublas*" "cuda*" "nsight*" "*cudnn*" "libnvidia*" -y
-    sudo apt remove --purge '^nvidia-.*' -y
-    # (Optional, Prefer) Remove all CUDA to avoid possible confilication with new driver
-    sudo rm -rf /usr/local/cuda*
-    sudo apt --purge autoremove -y
-    sudo apt autoclean
-    ```
+  ```sh
+  sudo apt --purge remove "*cublas*" "cuda*" "nsight*" "*cudnn*" "libnvidia*" -y
+  sudo apt remove --purge '^nvidia-.*' -y
+  # (Optional, Prefer) Remove all CUDA to avoid possible confilication with new driver
+  sudo rm -rf /usr/local/cuda*
+  sudo apt --purge autoremove -y
+  sudo apt autoclean
+  ```
 
 - Check if there is anything related packages leaft and remove them:
 
-  - ```sh
-    dpkg -l | grep -i nvidia
-    dpkg -l | grep nvidia-driver
-    sudo apt --purge remove {some-pkg}
-    ```
+  ```sh
+  dpkg -l | grep -i nvidia
+  dpkg -l | grep nvidia-driver
+  sudo apt --purge remove {some-pkg}
+  ```
 
 ## Install CUDA Toolkit, nvidia driver and cuDNN
 
@@ -33,40 +33,42 @@
   - If you want versions lower 12.3, then check [this doc](./deprecated.md).
 - Check [cuDNN Archive List](https://developer.nvidia.com/cudnn-archive) to find prefered version and follow the instuctions.
 - An example if you use `Ubuntu 24.04(x86_64)` and `deb(network)` for [CUDA 12.5 Update 1](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=24.04&target_type=deb_network)
+
   - Base Installer:
+
   ```sh
   wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
   sudo dpkg -i cuda-keyring_1.1-1_all.deb
   sudo apt update
   sudo apt install cuda-toolkit-12-5 -y
   ```
+
   > [!IMPORTANT]  
   > Check [this offical blog](https://developer.nvidia.com/blog/nvidia-transitions-fully-towards-open-source-gpu-kernel-modules/#supported_gpus) to check what flavor of driver does your gpu need.
+
   - Driver Installer, open kernel module flavor:
+
   ```sh
   sudo apt install nvidia-driver-555-open -y
   sudo apt install cuda-drivers-555 -y
   ```
+
   - Driver Installer, legacy kernel module flavor:
+
   ```sh
   sudo apt install cuda-drivers -y
   ```
+
 - Set CUDA `PATH` and `LD_LIBRARY_PATH` to your `[ba/z]shrc`:
 
   ```sh
-    add_path() {
-    # if arg_1 does not exist, exit function
-    [ -e "$1" ] || return 1
-    # if arg_1 is not a substring of $path, get full path and add it to $path
-    # shellcheck disable=SC1087
-    [[ ":$path:" == *" $1 "* ]] || path=("$(cd "$1" && pwd)" "$path[@]")
-  }
-
-  # set cuda path if nvidia gpus exists
+  # set cuda path if nvidia-smi works
   if command -v nvidia-smi &>/dev/null; then
   	add_path "/usr/local/cuda/bin"
+        [[ ":$path:" == *":/usr/local/cuda/bin:"* ]] ||
+            export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
   	[[ ":$LD_LIBRARY_PATH:" == *":/usr/local/cuda/lib64:"* ]] ||
-  		export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+            export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
   fi
   ```
 
@@ -77,6 +79,7 @@
 - Reboot and check gpu info with `nvidia-smi`.(prefered)
 
   - If you want to reload gpu mods while keeping machine alive, use following commands.
+
     > [!CAUTION]
     > However this may sriously slow down the gpu process until you reboot your machine.
 
@@ -142,13 +145,15 @@
   sudo systemctl start nvidia-persistenced.service
   ```
 
-  > [!NOTE]  
-  > `Persistence Daemon` is prefered than `Persistence Mode` after nvida driver R319.
+  > [!NOTE] > `Persistence Daemon` is prefered than `Persistence Mode` after nvida driver R319.
 
 - Verify the installation:
+
   - For CUDA Toolkit, follow the [steps](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#install-writable-samples) of [cuda-samples](https://github.com/NVIDIA/cuda-samples).
-  - > [!NOTE]  
+
+  - > [!NOTE]
     > You might need to install third-party libraries for compiling cuda-samples, check [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#install-third-party-libraries) to install the libs.
+
   - For cuDNN, follow the [steps in the doc](https://docs.nvidia.com/deeplearning/cudnn/latest/installation/linux.html#verifying-the-install-on-linux).
 
 ## Tips, Tricks and Tools
