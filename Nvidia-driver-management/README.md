@@ -1,14 +1,14 @@
 # Nvida Driver Management (CUDA Toolkit 12.3 Update 1 and higher)
 
-## Clean up old CUDA & Nvidia driver (prefered, if their is an old one installed)
+## Clean up old CUDA & Nvidia driver (prefered)
 
-- Check if there's any hardware failure by listing all gpus, i.e. gpu lost
+- Check if there's any hardware failure, i.e. gpu lost, by listing all gpus:
 
   ```sh
   lspci | grep -i nvidia
   ```
 
-- Completely remove CUDA & nvidia driver:
+- Purge CUDA & nvidia driver:
 
   ```sh
   sudo apt --purge remove "*cublas*" "cuda*" "nsight*" "*cudnn*" "libnvidia*" -y
@@ -19,7 +19,7 @@
   sudo apt autoclean
   ```
 
-- Check if there is anything related packages leaft and remove them:
+- Check if there is any leftover and remove them:
 
   ```sh
   dpkg -l | grep -i nvidia
@@ -28,11 +28,13 @@
   ```
 
 ## Install CUDA Toolkit, nvidia driver and cuDNN
-
+> [!IMPORTANT]  
+> Read [this offical blog](https://developer.nvidia.com/blog/nvidia-transitions-fully-towards-open-source-gpu-kernel-modules/#supported_gpus) to check which flavor of driver does your gpu need first.
+> 
 - Check [CUDA Toolkit Archive List](https://developer.nvidia.com/cuda-toolkit-archive) to find prefered version and follow the instructions.
   - If you want versions lower than 12.3, then check [this doc](./deprecated.md).
 - Check [cuDNN Archive List](https://developer.nvidia.com/cudnn-archive) to find prefered version and follow the instuctions.
-- An example if you use `Ubuntu 24.04(x86_64)` and `deb(network)` for [CUDA 12.5 Update 1](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=24.04&target_type=deb_network)
+- An example if you use `Ubuntu 24.04(x86_64)` and `deb(network)` for [CUDA 12.5 Update 1](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=24.04&target_type=deb_network) installation: 
 
   - Base Installer:
 
@@ -42,10 +44,7 @@
   sudo apt update
   sudo apt install cuda-toolkit-12-5 -y
   ```
-
-  > [!IMPORTANT]  
-  > Check [this offical blog](https://developer.nvidia.com/blog/nvidia-transitions-fully-towards-open-source-gpu-kernel-modules/#supported_gpus) to check what flavor of driver does your gpu need.
-
+  
   - Driver Installer, open kernel module flavor:
 
   ```sh
@@ -64,10 +63,9 @@
   ```sh
   # set cuda path if nvidia-smi works
   if command -v nvidia-smi &>/dev/null; then
-  	add_path "/usr/local/cuda/bin"
-        [[ ":$path:" == *":/usr/local/cuda/bin:"* ]] ||
+    [[ ":$path:" == *":/usr/local/cuda/bin:"* ]] ||
             export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
-  	[[ ":$LD_LIBRARY_PATH:" == *":/usr/local/cuda/lib64:"* ]] ||
+    [[ ":$LD_LIBRARY_PATH:" == *":/usr/local/cuda/lib64:"* ]] ||
             export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
   fi
   ```
@@ -76,12 +74,9 @@
   ```sh
   source ~/.[ba/z]shrc
   ```
-- Reboot and check gpu info with `nvidia-smi`.(prefered)
+- Reboot and check gpu info with `nvidia-smi`. (prefered)
 
   - If you want to reload gpu mods while keeping machine alive, use following commands.
-
-    > [!CAUTION]
-    > However this may sriously slow down the gpu process until you reboot your machine.
 
   ```sh
   # Change to CLI only mode
@@ -107,15 +102,23 @@
   nvidia-modprobe -v
   ```
 
+> [!CAUTION]
+> However if you manually reload nvidia-mod, it may sriously slow down the gpu process until you reboot your machine.
+
 ## Post-installation Actions
+> [!NOTE]
+> `Persistence Daemon` is prefered than `Persistence Mode` and enabled by default after nvida driver R319.
+
+> [!NOTE]
+> You might need to install third-party libraries for compiling cuda-samples, check [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#install-third-party-libraries) to install the libs.
 
 - Check if `Persistence Daemon` is active:
 
   ```sh
   sudo systemctl status nvidia-persistenced.service
   ```
-
-  - If it's active, it should shows:
+  <details>
+    <summary>If it's active, it should shows:(click-to-expand)</summary>
 
   ```
   ● nvidia-persistenced.service - NVIDIA Persistence Daemon
@@ -144,16 +147,11 @@
   sudo systemctl enable nvidia-persistenced.service
   sudo systemctl start nvidia-persistenced.service
   ```
-
-  > [!NOTE] > `Persistence Daemon` is prefered than `Persistence Mode` after nvida driver R319.
+  </details>
 
 - Verify the installation:
 
-  - For CUDA Toolkit, follow the [steps](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#install-writable-samples) of [cuda-samples](https://github.com/NVIDIA/cuda-samples).
-
-  - > [!NOTE]
-    > You might need to install third-party libraries for compiling cuda-samples, check [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#install-third-party-libraries) to install the libs.
-
+  - For CUDA Toolkit, follow the [steps](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#install-writable-samples) for [cuda-samples](https://github.com/NVIDIA/cuda-samples).
   - For cuDNN, follow the [steps in the doc](https://docs.nvidia.com/deeplearning/cudnn/latest/installation/linux.html#verifying-the-install-on-linux).
 
 ## Tips, Tricks and Tools
