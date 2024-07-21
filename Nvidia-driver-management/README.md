@@ -26,11 +26,14 @@
   dpkg -l | grep nvidia-driver
   sudo apt --purge remove {some-pkg}
   ```
+  
+> [!TIP]
+> Besides `/usr/local/cuda*`, make sure to check `$CUDA_HOME`, `$PATH` and `$LD_LIBRARY_PATH` for non-default CUDA installations.
 
 ## Install CUDA Toolkit, nvidia driver and cuDNN
 > [!IMPORTANT]  
 > Read [this offical blog](https://developer.nvidia.com/blog/nvidia-transitions-fully-towards-open-source-gpu-kernel-modules/#supported_gpus) to check which flavor of driver does your gpu need first.
-> 
+
 - Check [CUDA Toolkit Archive List](https://developer.nvidia.com/cuda-toolkit-archive) to find prefered version and follow the instructions.
   - If you want versions lower than 12.3, then check [this doc](./deprecated.md).
 - Check [cuDNN Archive List](https://developer.nvidia.com/cudnn-archive) to find prefered version and follow the instuctions.
