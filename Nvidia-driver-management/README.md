@@ -30,7 +30,7 @@
 ## Install CUDA Toolkit, nvidia driver and cuDNN
 
 - Check [CUDA Toolkit Archive List](https://developer.nvidia.com/cuda-toolkit-archive) to find prefered version and follow the instructions.
-  - If you want versions lower 12.3, then check [this doc](./deprecated.md).
+  - If you want versions lower than 12.3, then check [this doc](./deprecated.md).
 - Check [cuDNN Archive List](https://developer.nvidia.com/cudnn-archive) to find prefered version and follow the instuctions.
 - An example if you use `Ubuntu 24.04(x86_64)` and `deb(network)` for [CUDA 12.5 Update 1](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=24.04&target_type=deb_network)
 
