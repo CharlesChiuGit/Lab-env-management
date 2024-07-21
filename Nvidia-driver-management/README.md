@@ -1,172 +1,182 @@
-# Nvidia Driver Management
+# Nvida Driver Management (CUDA Toolkit 12.3 Update 1 and higher)
 
-## Reinstall CUDA & Nvidia driver
+## Clean up old CUDA & Nvidia driver (prefered, if their is an old one installed)
 
-0. List all PCI device to check if there is any hardware failure, i.e. gpu lost.
+- Check if there's any hardware failure by listing all gpus, i.e. gpu lost
 
-   ```bash
-   lspci | grep -i nvidia
-   ```
+  - ```sh
+    lspci | grep -i nvidia
+    ```
 
-1. Completely remove cuda & nvidia driver
+- Completely remove CUDA & nvidia driver:
 
-   ```bash
-   sudo apt --purge remove "*cublas*" "cuda*" "nsight*" "*cudnn*" "libnvidia*" -y
-   sudo apt remove --purge '^nvidia-.*' -y
-   # (Optional, Prefer) Remove all CUDA to avoid possible confilication with new driver
-   sudo rm -rf /usr/local/cuda*
-   sudo apt --purge autoremove -y
-   ```
+  - ```sh
+    sudo apt --purge remove "*cublas*" "cuda*" "nsight*" "*cudnn*" "libnvidia*" -y
+    sudo apt remove --purge '^nvidia-.*' -y
+    # (Optional, Prefer) Remove all CUDA to avoid possible confilication with new driver
+    sudo rm -rf /usr/local/cuda*
+    sudo apt --purge autoremove -y
+    sudo apt autoclean
+    ```
 
-2. Check if there is anything related packages leaft, then manually remove them via "sudo apt --purge remove sth".
+- Check if there is anything related packages leaft and remove them:
 
-   ```bash
-   dpkg -l | grep -i nvidia
-   dpkg -l | grep nvidia-driver
-   ```
+  - ```sh
+    dpkg -l | grep -i nvidia
+    dpkg -l | grep nvidia-driver
+    sudo apt --purge remove {some-pkg}
+    ```
 
-3. Install nvidia driver
+## Install CUDA Toolkit, nvidia driver and cuDNN
 
-   ```bash
-   # Add PPA's graphics drivers repository to your Ubuntu-based Distos
-   sudo add-apt-repository ppa:graphics-drivers/ppa
-   # Update all package
-   sudo apt update
-   # (Optional) Some packages u might need
-   sudo apt install g++ freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev libglu1-mesa libglu1-mesa-dev -y
-   # Install ubuntu-drivers-common package, no need for 24.04 and above
-   # sudo apt install ubuntu-drivers-common
-   # Install the nvidia driver u need. Press "tab" to see all available options, then finish the command
-   sudo apt install nvidia-driver-
-   ```
+- Check [CUDA Toolkit Archive List](https://developer.nvidia.com/cuda-toolkit-archive) to find prefered version and follow the instructions.
+  - If you want versions lower 12.3, then check [this doc](./deprecated.md).
+- Check [cuDNN Archive List](https://developer.nvidia.com/cudnn-archive) to find prefered version and follow the instuctions.
+- An example if you use `Ubuntu 24.04(x86_64)` and `deb(network)` for [CUDA 12.5 Update 1](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=24.04&target_type=deb_network)
+  - Base Installer:
+  ```sh
+  wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
+  sudo dpkg -i cuda-keyring_1.1-1_all.deb
+  sudo apt update
+  sudo apt install cuda-toolkit-12-5 -y
+  ```
+  > [!IMPORTANT]  
+  > Check [this offical blog](https://developer.nvidia.com/blog/nvidia-transitions-fully-towards-open-source-gpu-kernel-modules/#supported_gpus) to check what flavor of driver does your gpu need.
+  - Driver Installer, open kernel module flavor:
+  ```sh
+  sudo apt install nvidia-driver-555-open -y
+  sudo apt install cuda-drivers-555 -y
+  ```
+  - Driver Installer, legacy kernel module flavor:
+  ```sh
+  sudo apt install cuda-drivers -y
+  ```
+- Set CUDA `PATH` and `LD_LIBRARY_PATH` to your `[ba/z]shrc`:
 
-   - PPA stands for [Personal Package Archives](https://launchpad.net/ubuntu/+ppas), builded & provided by community.
-     - [Are PPAs safe to add to my system and what are some "red flags" to watch out for?](https://askubuntu.com/questions/35629/are-ppas-safe-to-add-to-my-system-and-what-are-some-red-flags-to-watch-out-for)
+  ```sh
+    add_path() {
+    # if arg_1 does not exist, exit function
+    [ -e "$1" ] || return 1
+    # if arg_1 is not a substring of $path, get full path and add it to $path
+    # shellcheck disable=SC1087
+    [[ ":$path:" == *" $1 "* ]] || path=("$(cd "$1" && pwd)" "$path[@]")
+  }
 
-4. Restart and check nvidia driver with **nvidia-smi**. (prefer)
+  # set cuda path if nvidia gpus exists
+  if command -v nvidia-smi &>/dev/null; then
+  	add_path "/usr/local/cuda/bin"
+  	[[ ":$LD_LIBRARY_PATH:" == *":/usr/local/cuda/lib64:"* ]] ||
+  		export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+  fi
+  ```
 
-   - If u want to reload gpu mods while keeping server alive, use following commands. **However this may sriously slow down the gpu process, restart will fix it.**
+- Reload the system path:
+  ```sh
+  source ~/.[ba/z]shrc
+  ```
+- Reboot and check gpu info with `nvidia-smi`.(prefered)
 
-     ```bash
-     # Change to CLI only mode
-     sudo systemctl isolate multi-user.target
-     # Kill processes using nvidia devices if any
-     sudo lsof /dev/nvidia*
-     sudo lsof -t /dev/nvidia* | xargs sudo kill -9
-     # Remove nvidia module
-     # "rmmod" shows the dependencies, remove them recursively and manually with "sudo rmmod sth"
-     sudo rmmod nvidia
-     # Reload nvidia module
-     sudo modprobe nvidia
-     # Set to default target
-     sudo systemctl default
-     ```
+  - If you want to reload gpu mods while keeping machine alive, use following commands.
+    > [!CAUTION]
+    > However this may sriously slow down the gpu process until you reboot your machine.
 
-   - If nvidia-modprobe is broken or missing, use following commands.
+  ```sh
+  # Change to CLI only mode
+  sudo systemctl isolate multi-user.target
+  # Kill processes using nvidia devices if any
+  sudo lsof /dev/nvidia*
+  sudo lsof -t /dev/nvidia* | xargs sudo kill -9
+  # Remove nvidia module
+  # "rmmod" shows the dependencies, remove them recursively and manually with "sudo rmmod sth"
+  sudo rmmod nvidia
+  # Reload nvidia module
+  sudo modprobe nvidia
+  # Set to default target
+  sudo systemctl default
+  ```
 
-     ```bash
-     # Install nvidia-modprobe
-     sudo apt install nvidia-modprobe
-     # Check nvidia-modprobe version
-     nvidia-modprobe -v
-     ```
+  - If `nvidia-modprobe` is broken or missing, fix it via following commands:
 
-5. Install [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads) & [cuDNN](https://developer.nvidia.com/rdp/cudnn-archive) via network.
+  ```sh
+  # Install nvidia-modprobe
+  sudo apt install nvidia-modprobe
+  # Check nvidia-modprobe version
+  nvidia-modprobe -v
+  ```
 
-   - CUDA: It is always prefer to walk through all the [Installation Guide](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) first.
+## Post-installation Actions
 
-     ```bash
-     # Set the "OS" alias based on your Ubuntu version
-     export OS='ubuntu2004' or 'ubuntu1804'
-     wget https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/cuda-${OS}.pin
-     sudo mv cuda-${OS}.pin /etc/apt/preferences.d/cuda-repository-pin-600
-     sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/7fa2af80.pub
-     sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/ /"
-     sudo apt-get update
-     # Install the latest CUDA
-     sudo apt-get -y install cuda
-     # Unset the "OS" alias
-     unset OS
-     ```
+- Check if `Persistence Daemon` is active:
 
-   - cuDNN: It is always prefer to walk through all the [Installation Guide](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#cudnn-package-manager-installation-overview) first.
+  ```sh
+  sudo systemctl status nvidia-persistenced.service
+  ```
 
-     ```bash
-     # Set the "cudnn_version" alias based on the version, u can find the latest version in Installation Guide
-     export cudnn_version='8.4.0.*'
-     # Set the "cuda_version" alias based on corresponding CUDA version u installed previously
-     export cuda_version='cuda10.2' or 'cuda11.6'
-     sudo apt install zlib1g
-     sudo apt-get install libcudnn8=${cudnn_version}-1+${cuda_version}
-     sudo apt-get install libcudnn8-dev=${cudnn_version}-1+${cuda_version}
-     # Unset the "cudnn_version" alias
-     unset cudnn_version
-     # Unset the "cuda_version" alias
-     unset cuda_version
-     ```
+  - If it's active, it should shows:
 
-6. Set the CUDA's path to system PATH.
+  ```
+  ● nvidia-persistenced.service - NVIDIA Persistence Daemon
+     Loaded: loaded (/usr/lib/systemd/system/nvidia-persistenced.service; static)
+     Active: active (running) since Sun 2024-07-21 07:31:57 UTC; 5h 53min ago
+   Main PID: 1331 (nvidia-persiste)
+      Tasks: 1 (limit: 38220)
+     Memory: 368.0K (peak: 844.0K)
+        CPU: 1ms
+     CGroup: /system.slice/nvidia-persistenced.service
+             └─1331 /usr/bin/nvidia-persistenced --user nvidia-persistenced --no-persistence-mode --verbose
 
-   - Open **/home/{user}/.bashrc** with your text editer.
+  Jul 21 07:31:57 {hostname} systemd[1]: Starting nvidia-persistenced.service - NVIDIA Persistence Daemon...
+  Jul 21 07:31:57 {hostname} nvidia-persistenced[1331]: Verbose syslog connection opened
+  Jul 21 07:31:57 {hostname} nvidia-persistenced[1331]: Now running with user ID 116 and group ID 120
+  Jul 21 07:31:57 {hostname} nvidia-persistenced[1331]: Started (1331)
+  Jul 21 07:31:57 {hostname} nvidia-persistenced[1331]: device 0000:01:00.0 - registered
+  Jul 21 07:31:57 {hostname} nvidia-persistenced[1331]: device 0000:02:00.0 - registered
+  Jul 21 07:31:57 {hostname} nvidia-persistenced[1331]: Local RPC services initialized
+  Jul 21 07:31:57 {hostname} systemd[1]: Started nvidia-persistenced.service - NVIDIA Persistence Daemon.
+  ```
 
-     ```bash
-     vim ~/.bashrc
-     ```
+  - If it's not active, enable the daemon via:
 
-   - Put these line at the bottom of the bashrc.
+  ```sh
+  sudo systemctl enable nvidia-persistenced.service
+  sudo systemctl start nvidia-persistenced.service
+  ```
 
-     ```bash
-     # Your cuda-version should look like this 'cuda-11.5'
-     ### Check nvidia gpu
-     # Some distro requires that the absolute path is given when invoking lspci
-     # e.g. /sbin/lspci if the user is not root.
-     gpu=$(lspci | grep -i '.* vga .* nvidia .*')
+  > [!NOTE]  
+  > `Persistence Daemon` is prefered than `Persistence Mode` after nvida driver R319.
 
-     # nocasematch: If set, Bash matches patterns in a case-insensitive fashion
-     # when performing matching while executing case or [[ conditional commands,
-     # when performing pattern substitution word expansions, or when filtering
-     # possible completions as part of programmable completion.
-     shopt -s nocasematch
+- Verify the installation:
+  - For CUDA Toolkit, follow the [steps](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#install-writable-samples) of [cuda-samples](https://github.com/NVIDIA/cuda-samples).
+  - > [!NOTE]  
+    > You might need to install third-party libraries for compiling cuda-samples, check [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#install-third-party-libraries) to install the libs.
+  - For cuDNN, follow the [steps in the doc](https://docs.nvidia.com/deeplearning/cudnn/latest/installation/linux.html#verifying-the-install-on-linux).
 
-     ### CUDA PATH
-     CUDA_PATH=/usr/local/cuda
-     if [ -d "${CUDA_PATH}" ] && [[ $gpu == *' nvidia '* ]]; then
-         # echo "You have nvgpu and cuda installed!"
-         export PATH="${CUDA_PATH}/bin"${PATH:+:${PATH}}
-         export LD_LIBRARY_PATH="${CUDA_PATH}/lib64"${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-       elif [ ! -d "${CUDA_PATH}" ] && [[ $gpu == *' nvidia '* ]]; then
-         echo "You have nvgpu, but you don't have cuda installed!"
-       elif ! [[ $gpu == *' nvidia '* ]]; then
-         echo "You don't have nvgpu loaded!"
-     fi
-     ```
+## Tips, Tricks and Tools
 
-   - Reload the system path.
+- [CUDA FAQ](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#frequently-asked-questions)
+- [Useful nvidia-smi Queries](https://nvidia.custhelp.com/app/answers/detail/a_id/3751/~/useful-nvidia-smi-queries)
+- [R367.38 nvidia-smi.txt](https://developer.download.nvidia.com/compute/DCGM/docs/nvidia-smi-367.38.pdf)
+- [nvtop - GPU & Accelerator process monitoring for AMD, Apple, Huawei, Intel, NVIDIA and Qualcomm](https://github.com/Syllo/nvtop)
+- [nvitop - An interactive NVIDIA-GPU process viewer and beyond, the one-stop solution for GPU process management.](https://github.com/XuehaiPan/nvitop)
+- [gpustat - A simple command-line utility for querying and monitoring GPU status](https://github.com/wookayin/gpustat)
+- [nvidia-htop - A tool for enriching the output of nvidia-smi.](https://github.com/peci1/nvidia-htop)
 
-     ```bash
-     source ~/.bashrc
-     ```
+### References
 
-7. (Optional) If gpus keep burning out when usage is too high, try the following command to limite gpu power.
-
-   - **Important!!** Following command will be restored to default after restart.
-
-     ```bash
-     # Check persistence mode status
-     nvidia-smi -q | grep 'Persistence Mode'
-     # Enable it if it's off. It is enabled after nvidia-driver-319 by default
-     sudo nvidia-smi -pm 1
-
-     # Determine the current, default and maximum power limit
-     nvidia-smi -q | grep 'Power Limit'
-     # Set power cap (maximum wattage the GPU will use)
-     sudo nvidia-smi -pl 170
-     ```
-
-   - Auto apply the setting after reboot.
-
-     - Watch this guide: [Running a sudo command automatically on startup](https://unix.stackexchange.com/questions/645914/running-a-sudo-command-automatically-on-startup).
-
-   - For more about persistence mode, see [Persistence Daemon](https://docs.nvidia.com/deploy/driver-persistence/index.html#persistence-daemon)
-   - For some useful nvidia-smi options, see [Useful nvidia-smi Queries](https://nvidia.custhelp.com/app/answers/detail/a_id/3751/~/useful-nvidia-smi-queries)
-   - For full details, please refer to the [nvidia-smi documentation](https://developer.download.nvidia.com/compute/DCGM/docs/nvidia-smi-367.38.pdf).
+- CUDA Toolkit:
+  - [CUDA Toolkit Archive](https://developer.nvidia.com/cuda-toolkit-archive)
+  - [CUDA Toolkit 12.5 Update 1 Downloads](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=24.04&target_type=deb_network)
+  - [CUDA Toolkit Documentation 12.5 Update 1](https://docs.nvidia.com/cuda/)
+  - [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
+- cuDNN
+  - [cuDNN Archive](https://developer.nvidia.com/cudnn-archive)
+  - [cuDNN 9.2.1 Downloads](https://developer.nvidia.com/cudnn-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=deb_network)
+  - [NVIDIA cuDNN](https://docs.nvidia.com/deeplearning/cudnn/latest/)
+  - [Installing cuDNN on Linux](https://docs.nvidia.com/deeplearning/cudnn/latest/installation/linux.html)
+- GitHub repo
+  - [NVIDIA/cuda-samples](https://github.com/NVIDIA/cuda-samples)
+  - [NVIDIA/nvidia-persistenced](https://github.com/NVIDIA/nvidia-persistenced)
+- Docs and Blogs
+  - [GPU Management and Deployment](https://docs.nvidia.com/deploy/index.html)
+    - [Driver Persistence](https://docs.nvidia.com/deploy/driver-persistence/index.html)
+  - [NVIDIA Transitions Fully Towards Open-Source GPU Kernel Modules](https://developer.nvidia.com/blog/nvidia-transitions-fully-towards-open-source-gpu-kernel-modules/#supported_gpus)

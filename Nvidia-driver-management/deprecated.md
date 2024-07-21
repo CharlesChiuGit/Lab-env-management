@@ -1,4 +1,4 @@
-# Nvidia Driver Management (deprecated)
+# Nvidia Driver Management (deprecated, before CUDA Toolkit 12.3 Update 1)
 
 ## Reinstall CUDA & Nvidia driver
 
