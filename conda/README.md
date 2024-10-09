@@ -2,8 +2,8 @@
 
 ## Install Micromamba:
 
-https://github.com/mamba-org/mamba
-https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html
+- https://github.com/mamba-org/mamba
+- https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html
 
 ### Linux and macOS
 
