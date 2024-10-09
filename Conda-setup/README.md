@@ -144,4 +144,11 @@ python -m pip install ninja
 ---
 
 ## Useful commands
+
 https://github.com/matbinder/secure-multi-user-conda
+
+## Resources
+
+- Search anaconda pkgs: https://anaconda.org/search?q=
+- Search conda-forge pkgs: https://conda-forge.org/search/
+- Manageing environments: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html

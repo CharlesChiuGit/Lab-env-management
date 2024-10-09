@@ -2,20 +2,20 @@
 
 ## Linux Setup
 
-- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/tree/main/Linux-setup)
+- Watch Readme.md in [this subfolder](./Linux-setup/)
 
 ## Nvidia Driver Management
 
-- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/tree/main/Nvidia-driver-management)
+- Watch Readme.md in [this subfolder](./Nvidia-driver-management/)
 
-## Conda Env Setup
+## Conda/Mamba Setup
 
-- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/tree/main/CondaEnv-setup)
+- Watch Readme.md in [this subfolder](./Conda-setup/)
 
 ## JupyterLab Setup
 
-- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/tree/main/jupyterlab-setup)
+- Watch Readme.md in [this subfolder](./JupyterLab-setup)
 
-## wsl2 Setup
+## WSL2 Setup
 
-- Watch Readme.md in [this subfolder](https://github.com/charleschiu2012/Lab-env-management/tree/main/wsl2-setup)
+- Watch Readme.md in [this subfolder](./WSL2-setup/)
