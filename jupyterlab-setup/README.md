@@ -1,52 +1,110 @@
-# JupyterLab Setup
+# JupyterLab v4
 
-## Install JupyterLab in (base) env
+ENVs:
 
-1. Install JupyterLab & related packages in **Conda env:base**(user mode)
+- Python : 3.12.7
+- IPython : 8.28.0
+- ipykernel : 6.29.5
+- ipywidgets : 8.1.5
+- jupyter_client : 8.6.3
+- jupyter_core : 5.7.2
+- jupyter_server : 2.14.2
+- jupyterlab : 4.2.5
 
-   ```bash
-   conda install -c anaconda git -y
-   conda install -c conda-forge nodejs jupyterlab nbresuse pandas -y
-   conda install -c conda-forge jupyterlab-system-monitor jupyterlab-git plotly -y
-   conda install -c conda-forge ipympl matplotlib ipywidgets jupyterlab_widgets -y
-   ```
+## JupyterLab Setup
 
-2. Install JupyterLab extensions
+### Setup JupyterLab conda venv
 
-   ```bash
-   jupyter labextension install jupyterlab-plotly
-   ```
+```bash
+conda env create --file ./env.yml
+```
 
-3. Build the extensions & check if all extensions are listed
+> [!IMPORTANT]
+> I deliberately remove `pip` in the venv to avoid multiple pkg manager to manage the same venv.
+> Read this [section](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#using-pip-in-an-environment) before you use `pip` in `conda` venv!
 
-   ```bash
-   jupyter lab build
-   jupyter labextension list
-   ```
+### Build the extensions & check if it's heathly or not
 
-4. JupyterLab theme
+```bash
+jupyter lab build
+jupyter labextension list --verbose
+```
 
-   ```bash
-   jupyter labextension install jupyterlab-tailwind-theme
-   jupyter labextension install @konodyuk/theme-ayu-mirage
-   ```
+> [!INFO]
+> Check if those unhealthly extensions are working porperly, or you might need to find alternative one.
 
-## Add other Conda env's kernel to JupyterLab
+## ipykernel management
 
-1. Activate the env
+https://jupyter-client.readthedocs.io/en/latest/
 
-   ```bash
-   conda activate my_env
-   ```
+### Install ipykernel to other conda venv
 
-2. Install ipykernel
+```bash
+conda activate another_env
+conda install ipykernel
+python -m ipykernel install --user --name another_env --display-name "whatever"
+```
 
-   ```bash
-   conda install ipykernel
-   ```
+### List all ipykernels
 
-3. Add kernel to JupyterLab
+```bash
+jupyter kernelspec list
+```
 
-   ```bash
-   python -m ipykernel install --user --name my_env --display-name "whatever"
-   ```
+### Remove unwanted ipykernel
+
+```bash
+jupyter kernelspec uninstall unwanted-kernel
+```
+
+## [Updating an environment](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#updating-an-environment)
+
+```bash
+conda env update --file env.yml --prune
+```
+
+## Installed jupyterlab extensions in `env.yml`
+
+### File Manager
+
+- https://github.com/jupyterlab-contrib/jupyterlab-unfold
+- https://github.com/jupyterlab-contrib/jupyter-archive
+- https://github.com/jupyterlab-contrib/jupyterlab-favorites
+
+### Monitoring Tools
+
+- https://github.com/rapidsai/jupyterlab-nvdashboard
+  - conda install -c rapidsai-nightly -c conda-forge jupyterlab-nvdashboard
+- https://github.com/jupyter-server/jupyter-resource-usage
+
+### IDE-utils
+
+- https://github.com/jupyter-lsp/jupyterlab-lsp
+  - conda install jupyterlab-lsp jupyter-lsp
+- https://github.com/jupyterlab-contrib/jupyterlab-variableInspector
+  - conda install lckr_jupyterlab_variableinspector
+- https://github.com/jupyterlab-contrib/jupyterlab_code_formatter
+  - conda install jupyterlab_code_formatter black isort
+- https://github.com/jupyterlab-contrib/search-replace
+  - conda install jupyterlab-search-replace ripgrep
+- https://github.com/jupyterlab-contrib/jupyterlab-vim
+- https://github.com/jupyterlab-contrib/spellchecker
+- https://github.com/jupyter/nbdime
+- https://github.com/timkpaine/jupyterlab_autoversion
+- https://github.com/deshaw/jupyterlab-execute-time
+
+### Layouts
+
+- https://github.com/trungleduc/jupyter_app_launcher
+  - https://jupyter-app-launcher.readthedocs.io/en/latest/usage.html
+- https://github.com/jupyter-widgets/jupyterlab-sidecar
+
+### Extra filetype supports
+
+- https://github.com/silx-kit/jupyterlab-h5web
+- https://github.com/jupyterlab/jupyterlab-latex
+- https://github.com/mwouts/jupytext
+
+### Themes
+
+- https://github.com/catppuccin/jupyterlab
