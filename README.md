@@ -2,20 +2,20 @@
 
 ## Linux Setup
 
-- Watch Readme.md in [this subfolder](./Linux-setup/)
+- Watch Readme.md in [this subfolder](./linux/)
 
 ## Nvidia Driver Management
 
-- Watch Readme.md in [this subfolder](./Nvidia-driver-management/)
+- Watch Readme.md in [this subfolder](./nvidia-driver/)
 
 ## Conda/Mamba Setup
 
-- Watch Readme.md in [this subfolder](./Conda-setup/)
+- Watch Readme.md in [this subfolder](./conda/)
 
 ## JupyterLab Setup
 
-- Watch Readme.md in [this subfolder](./JupyterLab-setup)
+- Watch Readme.md in [this subfolder](./jupyterlab/)
 
 ## WSL2 Setup
 
-- Watch Readme.md in [this subfolder](./WSL2-setup/)
+- Watch Readme.md in [this subfolder](./wsl2/)
