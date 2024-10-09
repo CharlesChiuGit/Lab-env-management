@@ -30,7 +30,7 @@ jupyter lab build
 jupyter labextension list --verbose
 ```
 
-> [!INFO]
+> [!WARNING]
 > Check if those unhealthly extensions are working porperly, or you might need to find alternative one.
 
 ## ipykernel management
