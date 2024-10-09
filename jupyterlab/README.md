@@ -65,6 +65,8 @@ conda env update --file env.yml --prune
 
 ## Installed jupyterlab extensions in `env.yml`
 
+[Extension Compatibility with JupyterLab 4.0 - jupyterlab/jupyterlab#14590](https://github.com/jupyterlab/jupyterlab/issues/14590)
+
 ### File Manager
 
 - https://github.com/jupyterlab-contrib/jupyterlab-unfold
