@@ -82,7 +82,7 @@ conda env update --file env.yml --prune
 ### IDE-utils
 
 - https://github.com/jupyter-lsp/jupyterlab-lsp
-  - conda install jupyterlab-lsp jupyter-lsp
+  - conda install jupyterlab-lsp jupyter-lsp jedi-language-server
 - https://github.com/jupyterlab-contrib/jupyterlab-variableInspector
   - conda install lckr_jupyterlab_variableinspector
 - https://github.com/jupyterlab-contrib/jupyterlab_code_formatter
